@@ -1,0 +1,20 @@
+{
+    "description": "",
+    "type": "neos-react",
+    "name": "bytorsten/react-fusion",
+    "require": {
+        "neos/flow": "*",
+        "bytorsten/react": "*",
+        "neos/fusion": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "byTorsten\\React\\Fusion\\": "Classes/"
+        }
+    },
+    "extra": {
+        "neos": {
+            "package-key": "byTorsten.React.Fusion"
+        }
+    }
+}

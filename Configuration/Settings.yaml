@@ -1,0 +1,4 @@
+byTorsten:
+  React:
+    autoInclude:
+      'byTorsten.React.Fusion': TRUE

@@ -1,0 +1,31 @@
+include: 'resource://Neos.Fusion/Private/Fusion/Root.fusion'
+
+prototype(byTorsten.React:CodeSplitting) {
+    @class = 'byTorsten\\React\\Fusion\\FusionObjects\\CodeSplittingImplementation'
+    packages = Neos.Fusion:RawArray
+    baseDirectory = null
+}
+
+prototype(byTorsten.React:Renderable) {
+    serverScript = null
+    clientScript = null
+    renderScripts = true
+    codeSplitting = byTorsten.React:CodeSplitting
+}
+
+prototype(byTorsten.React:App) < prototype(byTorsten.React:Renderable) {
+    @class = 'byTorsten\\React\\Fusion\\FusionObjects\\AppImplementation'
+    content = Neos.Fusion:Array
+    additionalContent = null
+}
+
+prototype(byTorsten.React:Widget) < prototype(byTorsten.React:Renderable) {
+    @class = 'byTorsten\\React\\Fusion\\FusionObjects\\WidgetImplementation'
+    component = null
+    props = Neos.Fusion:RawArray
+}
+
+prototype(byTorsten.React:Script) {
+    @class = 'byTorsten\\React\\Fusion\\FusionObjects\\ScriptImplementation'
+    codeSplitting = byTorsten.React:CodeSplitting
+}
