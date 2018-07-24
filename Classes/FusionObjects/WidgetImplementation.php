@@ -10,12 +10,12 @@ class WidgetImplementation extends AbstractReactRenderable
     /**
      * @var string
      */
-    protected $defaultServerScript = 'resource://byTorsten.React.Fusion/Private/React/component.server.js';
+    protected $defaultServerScript = 'resource://byTorsten.React.Fusion/Private/React/src/component.server.js';
 
     /**
      * @var string
      */
-    protected $defaultClientScript = 'resource://byTorsten.React.Fusion/Private/React/component.js';
+    protected $defaultClientScript = 'resource://byTorsten.React.Fusion/Private/React/src/component.js';
 
     /**
      * @return string
