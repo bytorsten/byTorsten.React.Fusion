@@ -1,7 +1,14 @@
 {
-    "description": "",
+    "description": "Fusion adapter for bytorsten/react",
     "type": "neos-react",
     "name": "bytorsten/react-fusion",
+    "authors": [
+        {
+            "name": "Torsten Blindert",
+            "email": "info@by-torsten.com"
+        }
+    ],
+    "license": "MIT",
     "require": {
         "neos/flow": "*",
         "bytorsten/react": "*",
