@@ -94,10 +94,7 @@ abstract class AbstractReactRenderable extends AbstractFusionObject
         $client = $view->client();
 
         foreach ($this->getCodeSplitting()->getPackages() as $packageName) {
-            $client->addHypotheticalFile($packageName, sprintf('
-                const pkg = window.__PACKAGES__[\'%s\'];
-                module.exports = pkg;
-            ', $packageName));
+            $client->addExternal($packageName, sprintf('window.__PACKAGES__[\'%s\']', $packageName));
         }
 
         return $view;
