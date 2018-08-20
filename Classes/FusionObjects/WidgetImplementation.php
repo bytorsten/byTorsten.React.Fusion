@@ -73,7 +73,7 @@ class WidgetImplementation extends AbstractReactRenderable
         return implode(PHP_EOL, [
             $contentTag,
             $this->buildStateTag($stateKey, $state),
-            $this->buildScriptTag($identifier, $view)
+            $this->buildScriptTag($identifier)
         ]);
     }
 

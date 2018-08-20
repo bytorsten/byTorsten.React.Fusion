@@ -1,12 +1,26 @@
 <?php
 namespace byTorsten\React\Fusion\FusionObjects;
 
+use Neos\Flow\Annotations as Flow;
+use byTorsten\React\Core\Cache\FileManager;
 use byTorsten\React\Core\View\ReactView;
 use byTorsten\React\Fusion\Domain\Model\CodeSplitting;
+use Neos\Flow\ResourceManagement\ResourceManager;
 use Neos\Fusion\FusionObjects\AbstractFusionObject;
 
 abstract class AbstractReactRenderable extends AbstractFusionObject
 {
+    /**
+     * @Flow\Inject
+     * @var FileManager
+     */
+    protected $fileManager;
+
+    /**
+     * @Flow\Inject
+     * @var ResourceManager
+     */
+    protected $resourceManager;
 
     /**
      * @var string
@@ -63,38 +77,41 @@ abstract class AbstractReactRenderable extends AbstractFusionObject
 
     /**
      * @param string $identifier
-     * @param ReactView $view
      * @return string
      */
-    protected function buildScriptTag(string $identifier, ReactView $view): string
+    protected function buildScriptTag(string $identifier): string
     {
-
         $uriBuilder = $this->runtime->getControllerContext()->getUriBuilder();
-        $uri = $uriBuilder->uriFor('index', ['identifier' =>  $identifier, 'chunkname' => $view->getScriptName()], 'Chunk', 'byTorsten.React');
+        $uri = $uriBuilder->uriFor('index', ['identifier' =>  $identifier, 'chunkname' => 'bundle.js'], 'Chunk', 'byTorsten.React');
 
-        return sprintf('<script defer src="%s"></script>', $uri);
+
+        $scriptTag = sprintf('<script defer src="%s"></script>', $uri);
+        if ($this->fileManager->hasClientCode($identifier) === false) {
+            $src = $this->resourceManager->getPublicPackageResourceUri('byTorsten.React', 'bundleNotification.js');
+            $scriptTag = $scriptTag . sprintf('<script src="%s?%s" data-identifier="%s"></script>', $src, $identifier, $identifier);
+        }
+
+        return $scriptTag;
     }
 
     /**
      * @param string $identifier
-     * @param string $serverFilePattern
-     * @param null|string $clientFilePattern
+     * @param string $serverFile
+     * @param null|string $clientFile
      * @return ReactView
      */
-    protected function createView(string $identifier, string $serverFilePattern, ?string $clientFilePattern): ReactView
+    protected function createView(string $identifier, string $serverFile, ?string $clientFile): ReactView
     {
         $view = new ReactView([
             'identifier' => $identifier,
-            'reactServerFilePattern' => $serverFilePattern,
-            'reactClientFilePattern' => $clientFilePattern
+            'serverFile' => $serverFile,
+            'clientFile' => $clientFile
         ]);
         $view->addAdditionalDependency(__FILE__);
         $view->setControllerContext($this->runtime->getControllerContext());
 
-        $client = $view->client();
-
         foreach ($this->getCodeSplitting()->getPackages() as $packageName) {
-            $client->addExternal($packageName, sprintf('window.__PACKAGES__[\'%s\']', $packageName));
+            $view->addExternal($packageName, sprintf('window.__PACKAGES__[\'%s\']', $packageName));
         }
 
         return $view;

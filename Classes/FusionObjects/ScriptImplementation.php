@@ -25,12 +25,10 @@ class ScriptImplementation extends AbstractFusionObject
 
         $identifier = md5('header-script-' . $codeSplitting->toIdentifier());
         $view = new ReactView([
-            'reactServerFilePattern' => 'resource://byTorsten.React.Fusion/Private/React/src/script.server.js',
-            'reactClientFilePattern' => count($packages) > 0 ? 'bundle.js' : null,
+            'serverFile' => 'resource://byTorsten.React.Fusion/Private/React/src/script.server.js',
+            'clientFile' => count($packages) > 0 ? 'bundle.js' : null,
             'identifier' => $identifier
         ]);
-
-        $view->client()->showBundleNotification(false);
 
         if (count($packages) > 0) {
             $view->setBaseDirectory($codeSplitting->getBaseDirectory());

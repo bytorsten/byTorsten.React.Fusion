@@ -6,7 +6,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { getDataFromTree } from '@bytorsten/react/server';
 
 const InternalData = ({ internalDataKey }) => {
-  const { identifier, clientChunkName: chunkname, ...rest } = __internalData;
+  const { identifier, ...rest } = __internalData;
 
   return (
     <Fragment>
@@ -25,9 +25,9 @@ const InternalData = ({ internalDataKey }) => {
       <Context>
         {({ externalPackages }) => externalPackages && (
           <Fragment>
-            <Uri forceFetch action="index" controller="chunk" package="bytorsten.react" arguments={{ identifier, chunkname }}>
+            <Uri forceFetch action="index" controller="chunk" package="bytorsten.react" arguments={{ identifier, chunkname: 'bundle.js' }}>
               {({ data }) => (
-                <script defer type="module" src={data} />
+                <script defer src={data} />
               )}
             </Uri>
           </Fragment>

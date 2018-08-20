@@ -117,7 +117,7 @@ class AppImplementation extends AbstractReactRenderable
         return implode(PHP_EOL, [
             $content,
             $this->buildStateTag($stateKey, $renderResult['state']),
-            $this->buildScriptTag($identifier, $view)
+            $this->buildScriptTag($identifier)
         ]);
     }
 }
