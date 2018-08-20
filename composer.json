@@ -11,7 +11,7 @@
     "license": "MIT",
     "require": {
         "neos/flow": "*",
-        "bytorsten/react": "*",
+        "bytorsten/react": "~0.1.0",
         "neos/fusion": "*"
     },
     "autoload": {
